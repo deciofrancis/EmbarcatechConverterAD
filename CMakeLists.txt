@@ -35,13 +35,10 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(EmbarcatechConverterAD EmbarcatechConverterAD.c )
+add_executable(EmbarcatechConverterAD EmbarcatechConverterAD.c lib/ssd1306.c)
 
 pico_set_program_name(EmbarcatechConverterAD "EmbarcatechConverterAD")
 pico_set_program_version(EmbarcatechConverterAD "0.1")
-
-# Generate PIO header
-pico_generate_pio_header(EmbarcatechConverterAD ${CMAKE_CURRENT_LIST_DIR}/blink.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(EmbarcatechConverterAD 0)
@@ -49,7 +46,10 @@ pico_enable_stdio_usb(EmbarcatechConverterAD 1)
 
 # Add the standard library to the build
 target_link_libraries(EmbarcatechConverterAD
-        pico_stdlib)
+        pico_stdlib
+        hardware_i2c
+        hardware_adc
+        hardware_pwm)
 
 # Add the standard include files to the build
 target_include_directories(EmbarcatechConverterAD PRIVATE
